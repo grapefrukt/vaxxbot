@@ -42,8 +42,8 @@ def make_message(previous_day, day) :
         message += f"den {make_ordinal(day.date.day)} {day.date:%B} rapporterades {delta_count:n} nya vaccindoser sedan gårdagen. "
     
     message += f"totalt har {day.count:n} doser getts, "
-    message += f"vilket motsvarar {(day.count/target_dose_count*100):.1n}% av det totala antalet doser som ska ges till alla vuxna, "
-    message += f"en ökning med {(delta_count/target_dose_count*100):.2n} procentenheter sedan senaste uppdateringen."
+    message += f"vilket motsvarar {(day.count/target_dose_count*100):.1f}% av det totala antalet doser som ska ges till alla vuxna, "
+    message += f"en ökning med {(delta_count/target_dose_count*100):.2f} procentenheter sedan senaste uppdateringen."
 
     return message
 
