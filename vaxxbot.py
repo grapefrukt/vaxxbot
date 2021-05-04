@@ -4,9 +4,14 @@ import pandas as pd
 import datetime
 from dateutil.parser import parse
 import locale
+import configparser
+import tweepy
 
-newline = '\n'
-target_dose_count = 8189892*2
+config = configparser.ConfigParser()
+config.read('vaxxbot.cfg')
+config = config['vaxxbot']
+
+target_dose_count = int(config['target_dose_count'])
 
 class VaxDay :
     def __init__(self, date, count): 
@@ -37,8 +42,8 @@ def make_message(previous_day, day) :
         message += f"den {make_ordinal(day.date.day)} {day.date:%B} rapporterades {delta_count:n} nya vaccindoser sedan gårdagen. "
     
     message += f"totalt har {day.count:n} doser getts, "
-    message += f"vilket motsvarar {(day.count/target_dose_count*100):.1f}% av det totala antalet doser som ska ges till alla vuxna, "
-    message += f"en ökning med {(delta_count/target_dose_count*100):.2f} procentenheter sen senaste uppdateringen."
+    message += f"vilket motsvarar {(day.count/target_dose_count*100):.1n}% av det totala antalet doser som ska ges till alla vuxna, "
+    message += f"en ökning med {(delta_count/target_dose_count*100):.2n} procentenheter sedan senaste uppdateringen."
 
     return message
 
@@ -77,12 +82,22 @@ for entry in collection :
     print("")
     last_entry = entry
 
-# message = 
 
-if last_entry.date > most_recent_date :
-    print("time to go!")
-else :
-    print("last timestamp was same as retrieved, no go")
+if last_entry.date <= most_recent_date :
+    print("last update has been posted already, quitting...")
+    quit()
+
+message = make_message(collection[-2], collection[-1])
+
+# Authenticate to Twitter
+auth = tweepy.OAuthHandler(config["api_key"], config["api_secret_key"])
+auth.set_access_token(config["access_token"], config["access_token_secret"])
+
+# Create API object
+api = tweepy.API(auth)
+
+# Create a tweet
+api.update_status(message)
 
 with open("cache.txt", "w") as file:
     print(f"{last_entry.date:%Y-%m-%d}", file=file)
