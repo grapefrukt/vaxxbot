@@ -8,7 +8,7 @@ import configparser
 import tweepy
 
 # first we set the locale to swedish
-locale.setlocale(locale.LC_ALL, 'sv_SE.utf8')
+locale.setlocale(locale.LC_ALL, 'sv_SE')
 
 # parse the config file, mainly has twitter authentication bits
 config = configparser.ConfigParser()
