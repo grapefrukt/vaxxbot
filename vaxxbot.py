@@ -70,7 +70,7 @@ last_update_delta = current_time.date() - last_update_date
 # now, we start to try and early out for a number of reasons
 
 # first, if we already posted today, we're done already
-if last_update_delta.days is 0 : 
+if last_update_delta.days == 0 : 
     print("already posted today")
     quit()
 else :
