@@ -58,7 +58,7 @@ try :
     with open('cache.txt', 'r') as file:
         last_update_date = parse(file.read()).date()
 except :
-    last_update_date = parse("1970-01-01")
+    last_update_date = parse("1970-01-01").date()
 
 # figure out current time
 current_time = datetime.datetime.now()
