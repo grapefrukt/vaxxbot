@@ -1,7 +1,4 @@
-#!/bin/bash
-while [ : ]
-do
-	python vaxxbot.py
-	echo ""
-	sleep 5m
-done
+for ((;;)) { 
+	python3 vaxxbot.py
+	sleep 300
+}
