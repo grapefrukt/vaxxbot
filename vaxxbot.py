@@ -95,7 +95,7 @@ requests.get(url)
 page = requests.get(url)
 soup = BeautifulSoup(page.text, 'lxml')
 
-table_caption = soup.find('caption', string = 'Tabell 1. Antal rapporterade vaccinationer totalt')
+table_caption = soup.find('caption', string = 'Tabell 1. Antal rapporterade vaccinationer totalt.')
 table_body = table_caption.find_parent('table').find('tbody')
 
 # once that's loaded and parsed, we try to pick out what we need
